@@ -1,6 +1,8 @@
 <?php
+require __DIR__.'/auth.php';
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SeanceController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -11,6 +13,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+   
+    Route::get('/seances', [SeanceController::class, 'index'])->name('seances.index');
+    Route::get('/seances/create', [SeanceController::class, 'create'])->name('seances.create');
+    Route::post('/seances/create', [SeanceController::class, 'store'])->name('seances.store');
+    Route::get('/seances/edit/{id}', [SeanceController::class, 'edit'])->name('seances.edit');
+    Route::put('/seances/update/{id}', [SeanceController::class, 'update'])->name('seances.update');
+    Route::delete('/seances/destroy/{id}', [SeanceController::class, 'destroy'])->name('seances.destroy');
+    
 });
 
-require __DIR__.'/auth.php';

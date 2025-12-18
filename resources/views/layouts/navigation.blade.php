@@ -14,7 +14,13 @@
                 <div class="hidden space-x-6 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" 
                         class="text-gray-200 hover:text-red-500 transition font-semibold">
-                        {{ __('Dashboard') }}
+                        Dashboard
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-6 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('seances.index')" :active="request()->routeIs('seances.index')" 
+                        class="text-gray-200 hover:text-red-500 transition font-semibold">
+                        Seances
                     </x-nav-link>
                 </div>
             </div>
@@ -43,7 +49,7 @@
                             @csrf
                             <x-dropdown-link :href="route('logout')"
                                 onclick="event.preventDefault(); this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                                Deconnexion
                             </x-dropdown-link>
                         </form>
                     </x-slot>
@@ -66,7 +72,7 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden bg-gray-900 border-t border-gray-700">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="text-gray-200 hover:text-red-500 transition">
-                {{ __('Dashboard') }}
+                Dashboard
             </x-responsive-nav-link>
         </div>
 
@@ -79,7 +85,7 @@
 
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')" class="text-gray-200 hover:text-red-500 transition">
-                    {{ __('Profile') }}
+                    Profile
                 </x-responsive-nav-link>
 
                 <!-- Logout -->
@@ -87,7 +93,7 @@
                     @csrf
                     <x-responsive-nav-link :href="route('logout')"
                         onclick="event.preventDefault(); this.closest('form').submit();" class="text-gray-200 hover:text-red-500 transition">
-                        {{ __('Log Out') }}
+                        Deconnexion
                     </x-responsive-nav-link>
                 </form>
             </div>
