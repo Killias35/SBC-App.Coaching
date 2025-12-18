@@ -18,7 +18,7 @@ class SuperAdminSeeder extends Seeder
             'name' => 'Super Admin',
             'email' => 'killias356@gmail.com',
             'role' => 'super_admin',
-            'pseudo' => 'Killias',
+            'pseudo' => 'super admin',
             'password' => Hash::make('kblebg'),
         ]);
     }
