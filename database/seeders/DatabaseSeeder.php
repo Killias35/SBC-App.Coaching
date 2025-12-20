@@ -8,6 +8,7 @@ use Illuminate\Database\Seeder;
 
 use Database\Seeders\SuperAdminSeeder;
 use Database\Seeders\SeancesSeed;
+use Database\Seeders\ActiviteSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,5 +21,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(SuperAdminSeeder::class);
         $this->call(SeancesSeed::class);
+        $this->call(ActiviteSeeder::class);
     }
 }

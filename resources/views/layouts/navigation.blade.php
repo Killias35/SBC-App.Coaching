@@ -23,6 +23,12 @@
                         Seances
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-6 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('activites.index')" :active="request()->routeIs('activites.index')" 
+                        class="text-gray-200 hover:text-red-500 transition font-semibold">
+                        Activités
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->

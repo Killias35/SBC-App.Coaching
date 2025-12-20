@@ -3,6 +3,7 @@ require __DIR__.'/auth.php';
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SeanceController;
+use App\Http\Controllers\ActiviteController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -21,5 +22,11 @@ Route::middleware('auth')->group(function () {
     Route::put('/seances/update/{id}', [SeanceController::class, 'update'])->name('seances.update');
     Route::delete('/seances/destroy/{id}', [SeanceController::class, 'destroy'])->name('seances.destroy');
     
+    Route::get('/activites', [ActiviteController::class, 'index'])->name('activites.index');
+    Route::get('/activites/create', [ActiviteController::class, 'create'])->name('activites.create');
+    Route::post('/activites/create', [ActiviteController::class, 'store'])->name('activites.store');
+    Route::get('/activites/edit/{id}', [ActiviteController::class, 'edit'])->name('activites.edit');
+    Route::put('/activites/update/{id}', [ActiviteController::class, 'update'])->name('activites.update');
+    Route::delete('/activites/destroy/{id}', [ActiviteController::class, 'destroy'])->name('activites.destroy');
 });
 
