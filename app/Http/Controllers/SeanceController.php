@@ -9,9 +9,10 @@ use Illuminate\Support\Facades\Redirect;
 class SeanceController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $seances = Seance::all();
+        $user_id = $request->user()->id;
+        $seances = Seance::where('user_id', $user_id)->get();
         return view('seances.index', compact('seances'));
     }
 
