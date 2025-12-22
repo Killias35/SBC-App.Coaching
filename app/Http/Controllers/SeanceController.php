@@ -11,11 +11,23 @@ class SeanceController extends Controller
 
     public function index(Request $request)
     {
-        $user_id = $request->user()->id;
-        $seances = Seance::where('user_id', $user_id)->get();
-        return view('seances.index', compact('seances'));
+        return view('seances.index');
     }
 
+    public function coach(Request $request)
+    {
+        $user = $request->user();
+        $seances = Seance::all();
+        return view('seances.coach', compact('seances'));
+    }
+
+    public function mines(Request $request)
+    {
+        $user_id = $request->user()->id;
+        $seances = Seance::where('user_id', $user_id)->get();
+        return view('seances.mines', compact('seances'));
+    }
+    
     public function create()
     {
         return view('seances.create');
@@ -32,7 +44,7 @@ class SeanceController extends Controller
         $titre = $request->input('titre');
         $description = $request->input('description');
         $image = $request->input('image');
-        $user_id = $request->input('user_id');
+        $user_id = $request->user()->id;
 
         Seance::create([
             'titre' => $titre,
@@ -44,10 +56,13 @@ class SeanceController extends Controller
         return Redirect()->route('seances.index');
     }
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
+        $user_id = $request->user()->id;
         $seance = Seance::where('id', $id)->first();
-        return view('seances.edit', compact('seance'));
+        $canEdit = $seance->user_id == $user_id;
+
+        return view('seances.edit', compact('seance', 'canEdit'));
     }
 
     public function update(Request $request, $id)
@@ -60,8 +75,13 @@ class SeanceController extends Controller
         $titre = $request->input('titre');
         $description = $request->input('description');
         $image = $request->input('image');
+        $user_id = $request->user()->id;
 
-        Seance::where('id', $id)->update([
+        $seance = Seance::where('id', $id)->first();
+        if ($seance->user_id != $user_id) {  // ne peut pas updater une seance dont il n'est pas le proprietaire
+            return Redirect()->route('seances.index');
+        }
+        $seance->update([
             'titre' => $titre,
             'description' => $description,
             'image' => $image,
@@ -69,9 +89,14 @@ class SeanceController extends Controller
         return Redirect()->route('seances.index');
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        Seance::where('id', $id)->delete();
+        $user_id = $request->user()->id;
+        $seance = Seance::where('id', $id);
+        if ($seance->user_id != $user_id) {  // ne peut pas supprimer une seance dont il n'est pas le proprietaire
+            return Redirect()->route('seances.index');
+        }
+        $seance->delete();
         return Redirect()->route('seances.index');
     }
 }

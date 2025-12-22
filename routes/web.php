@@ -16,9 +16,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
    
     Route::get('/seances', [SeanceController::class, 'index'])->name('seances.index');
+    Route::get('/seances/coach', [SeanceController::class, 'coach'])->name('seances.coach');
+    Route::get('/seances/mines', [SeanceController::class, 'mines'])->name('seances.mines');
     Route::get('/seances/create', [SeanceController::class, 'create'])->name('seances.create');
-    Route::post('/seances/create', [SeanceController::class, 'store'])->name('seances.store');
     Route::get('/seances/edit/{id}', [SeanceController::class, 'edit'])->name('seances.edit');
+    
+    Route::post('/seances/create', [SeanceController::class, 'store'])->name('seances.store');
     Route::put('/seances/update/{id}', [SeanceController::class, 'update'])->name('seances.update');
     Route::delete('/seances/destroy/{id}', [SeanceController::class, 'destroy'])->name('seances.destroy');
     
