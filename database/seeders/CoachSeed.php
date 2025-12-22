@@ -10,19 +10,17 @@ use App\Models\Seance;
 
 use Illuminate\Support\Facades\Hash;
 
-class SeancesSeed extends Seeder
+class CoachSeed extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
+    
     public function run(): void
     {
         $user = User::create([
-            'name' => 'test Seances',
-            'email' => 'testSeances@gmail.com',
-            'role' => 'user',
-            'pseudo' => 'test Seances',
-            'password' => Hash::make('testSeances'),
+            'name' => 'test Coach',
+            'email' => 'testCoach@gmail.com',
+            'role' => 'admin',
+            'pseudo' => 'test Coach',
+            'password' => Hash::make('testCoach'),
         ]);
 
         for ($i=0; $i < 50; $i++) { 
@@ -32,5 +30,14 @@ class SeancesSeed extends Seeder
                 'description' => 'test Seances'.$i
             ]);
         }
+
+        User::create([
+            'name' => 'test Coach2',
+            'email' => 'testCoach2@gmail.com',
+            'role' => 'user',
+            'pseudo' => 'test Coach2',
+            'password' => Hash::make('testCoach2'),
+            'coach_id' => $user->id
+        ]);
     }
 }

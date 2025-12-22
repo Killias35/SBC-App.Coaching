@@ -22,6 +22,8 @@ class User extends Authenticatable
         'pseudo',
         'email',
         'password',
+        'role',
+        'coach_id'
     ];
 
     /**
@@ -60,5 +62,30 @@ class User extends Authenticatable
         return $this->activitesFavorites()
             ->where('activite_id', $activiteId)
             ->exists();
+    }
+
+    public function coach()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function doneSeances()
+    {
+        return $this->belongsToMany(
+            Seance::class,
+            'seance_user_done',
+        )->withTimestamps();
+    }
+
+    public function hasSeanceDone(int $seanceId): bool
+    {
+        return $this->doneSeances()
+            ->where('seance_id', $seanceId)
+            ->exists();
+    }
+
+    public function seances()
+    {
+        return $this->hasMany(Seance::class);
     }
 }

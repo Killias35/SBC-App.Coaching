@@ -21,6 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/seances/create', [SeanceController::class, 'create'])->name('seances.create');
     Route::get('/seances/edit/{id}', [SeanceController::class, 'edit'])->name('seances.edit');
     
+    Route::post('/seances/done', [SeanceController::class, 'done'])->name('seances.done');
     Route::post('/seances/create', [SeanceController::class, 'store'])->name('seances.store');
     Route::put('/seances/update/{id}', [SeanceController::class, 'update'])->name('seances.update');
     Route::delete('/seances/destroy/{id}', [SeanceController::class, 'destroy'])->name('seances.destroy');

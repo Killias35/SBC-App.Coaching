@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Seance;
+use App\Models\SeancesDone;
 use Illuminate\Support\Facades\Redirect;
 
 class SeanceController extends Controller
@@ -17,7 +18,13 @@ class SeanceController extends Controller
     public function coach(Request $request)
     {
         $user = $request->user();
-        $seances = Seance::all();
+        if ($user->coach == null) {
+            return Redirect()->route('seances.index');
+        }
+        $seances = Seance::where('user_id', $user->coach->id)->get();
+        foreach ($seances as $seance) {
+            $seance->done = $user->hasSeanceDone($seance->id);
+        }
         return view('seances.coach', compact('seances'));
     }
 
@@ -89,10 +96,21 @@ class SeanceController extends Controller
         return Redirect()->route('seances.index');
     }
 
+    public function done(Request $request)
+    {
+        $request->validate([
+            'seance_id' => 'required',
+        ]);
+
+        $seance_id = $request->input('seance_id');
+        auth()->user()->doneSeances()->toggle($seance_id);
+        return back();
+    }
+
     public function destroy(Request $request, $id)
     {
         $user_id = $request->user()->id;
-        $seance = Seance::where('id', $id);
+        $seance = Seance::where('id', $id)->first();
         if ($seance->user_id != $user_id) {  // ne peut pas supprimer une seance dont il n'est pas le proprietaire
             return Redirect()->route('seances.index');
         }

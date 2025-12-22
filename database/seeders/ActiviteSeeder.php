@@ -20,7 +20,7 @@ class ActiviteSeeder extends Seeder
         $user = User::create([
             'name' => 'Activites Systeme',
             'email' => 'testActivites@gmail.com',
-            'role' => 'super_admin',
+            'role' => 'user',
             'pseudo' => 'Activites Systeme',
             'password' => Hash::make('testActivites'),
         ]);

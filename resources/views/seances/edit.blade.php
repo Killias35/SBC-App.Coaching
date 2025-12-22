@@ -11,6 +11,12 @@
                 <form method="POST" action="{{ route('seances.update', $seance->id) }}">
                     @method('PUT')
                     @csrf
+
+                    @php
+                        $disabled = $canEdit ? '' : 'disabled';
+                        $color = $canEdit ? 'text-white' : 'text-gray-400';
+                    @endphp
+
                     <input type="hidden" name="_method" value="PUT">
                     <input type="hidden" name="id" value="{{ $seance->id }}"></input>
 
@@ -21,8 +27,9 @@
                             name="titre" 
                             rows="1"
                             placeholder="WOD 15/12/2025" 
-                            maxlength="200" 
-                            class="w-full p-4 bg-gray-800 text-white rounded-xl border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500 text-lg leading-relaxed resize-none shadow-inner"
+                            maxlength="200"
+                            {{ $disabled }}
+                            class="w-full p-4 bg-gray-800 {{ $color }} rounded-xl border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500 text-lg leading-relaxed resize-none shadow-inner"
                         >{{ $seance->titre }}</textarea>
 
                         <label for="description" class="block text-gray-300 font-semibold mb-2">Décris ta séance</label>
@@ -32,15 +39,18 @@
                             rows="12"
                             placeholder="Écris ici ta séance du jour..." 
                             maxlength="800"
-                            class="w-full p-4 bg-gray-800 text-white rounded-xl border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500 text-lg leading-relaxed resize-none shadow-inner"
+                            {{ $disabled }}
+                            class="w-full p-4 bg-gray-800 {{ $color }} rounded-xl border border-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500 text-lg leading-relaxed resize-none shadow-inner"
                         >{{ $seance->description }}</textarea>
                         <x-input-error :messages="$errors->get('description')" class="mt-2 text-red-400" />
                     </div>
 
                     <div class="flex justify-end">
-                        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-2xl shadow-lg transition">
-                            Enregistrer la séance
-                        </button>
+                        @if ($canEdit)
+                            <button class="px-6 py-2 rounded-lg bg-red-600 hover:bg-red-700 {{ $color }} font-semibold">
+                                Enregistrer
+                            </button>
+                        @endif
                     </div>
                 </form>
             </div>
