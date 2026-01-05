@@ -17,7 +17,7 @@
             @else
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     @foreach($seances as $seance)
-                        <div class="bg-gray-900 border border-gray-700 rounded-xl shadow-lg overflow-hidden flex flex-col">
+                        <div class="bg-gray-900 border border-gray-800 rounded-2xl shadow-lg overflow-hidden flex flex-col hover:border-indigo-500 transition">
                             <div class="p-4 flex-1">
                                 <h3 class="text-lg font-bold text-white">
                                     {{ $seance->titre }}

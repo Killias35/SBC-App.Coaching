@@ -114,30 +114,34 @@ editor.addEventListener('keyup', () => {
     if (!selection.rangeCount) return;
 
     const text = editor.innerText;
-    const match = text.match(/#(\w*)/);
+    const matches = text.matchAll(/#(\w*)/g);
+    let match = null;
+    matches.forEach(found => {
+        match = found[1];
+    });
 
-    if (!match) {
+    if (match == null) {
         autocomplete.classList.add('hidden');
         return;
     }
 
-    const query = match[1].toLowerCase();
+    const query = match.toLowerCase();
     const results = activites.filter(a =>
         a.nom.toLowerCase().includes(query)
     );
 
     if (!results.length) {
-        autocomplete.classList.add('hidden');
+        for (let i = 0; i < activites.length; i++) {
+            const exercice = activites[i];
+            if (i > 30) {break;}
+            AddAutocomplete(exercice.nom, exercice);
+        }
         return;
     }
 
     autocomplete.innerHTML = '';
-    results.forEach(a => {
-        const item = document.createElement('div');
-        item.className = 'px-4 py-2 hover:bg-gray-700 cursor-pointer text-white';
-        item.textContent = a.nom;
-        item.onclick = () => insertExercise(a);
-        autocomplete.appendChild(item);
+    results.forEach(exercice => {
+        AddAutocomplete(exercice.nom, exercice);
     });
 
     const caret = getCaretPosition();
@@ -147,6 +151,22 @@ editor.addEventListener('keyup', () => {
     }
     autocomplete.classList.remove('hidden');
 });
+
+function AddAutocomplete(name, exercice) {
+    const item = document.createElement('div');
+    item.className = 'px-4 py-2 hover:bg-gray-700 cursor-pointer text-white';
+    item.textContent = name;
+    item.onclick = () => insertExercise(exercice);
+    autocomplete.appendChild(item);
+}
+
+function SetClickForSpans() {
+    const spans = document.querySelectorAll('#special');
+    spans.forEach(span => {
+        console.log(span.id);
+        span.addEventListener('click', () => editExercise(span));
+    });
+}
 
 function insertExercise(activity, replace=true, getSpan=false) {
     const key = state.counter;
@@ -165,27 +185,26 @@ function insertExercise(activity, replace=true, getSpan=false) {
         poids: poids
     };
 
-    if (replace) {
-        const matches = [...editor.innerText.matchAll(/#(\w*)/g)];
-        let pos = 0;
-        matches.forEach(found => {
-            pos = editor.innerHTML.indexOf(found[0]);
-            editor.innerHTML = editor.innerHTML.replace(found[0], '');
-        });
-    }
-
+    
     const span = document.createElement('span');
     span.contentEditable = false;
     span.dataset.key = key;
     span.className =
-        'inline-flex items-center px-3 py-1 mx-1 rounded-lg bg-red-600 text-white text-sm cursor-pointer select-none';
-
+    'inline-flex items-center px-3 py-1 mx-1 rounded-lg bg-red-600 text-white text-sm cursor-pointer select-none';
+    span.id = "special";
     span.textContent = ` ${nom} · ${quantity} · ${difficulty} · ${poids} `;
     autocomplete.classList.add('hidden');
     
     if (getSpan) return span;
-    editor.appendChild(span);
-    spanClick();
+    if (replace) {
+        const matches = [...editor.innerText.matchAll(/#(\w*)/g)];
+        let match = "";
+        matches.forEach(found => {
+            match = found[0];
+        });
+        editor.innerHTML = editor.innerHTML.replace(match, span.outerHTML);
+    }
+    SetClickForSpans();
 }
 
 function editExercise(span) {
@@ -204,13 +223,6 @@ function editExercise(span) {
     span.textContent = ` ${activity.nom} · ${data.quantity} · ${data.difficulty} · ${data.poids} `;
 }
 
-function spanClick(){
-    spans = document.getElementsByClassName('inline-flex items-center px-3 py-1 mx-1 rounded-lg bg-red-600 text-white text-sm cursor-pointer select-none');
-    for (let i = 0; i < spans.length; i++) {
-        spans[i].addEventListener('click', () => editExercise(spans[i]));
-    }
-}
-
 form.addEventListener('submit', () => {
     let content = editor.innerHTML.replace(/&nbsp;/g, ' ');
 
@@ -227,22 +239,12 @@ form.addEventListener('submit', () => {
 });
 
 function hydrateEditor() {
-    const fullDescription = editor.innerHTML;
-    editor.innerHTML = '';
-    let description = '';
-    let index = 0;
-
     seanceExercises.forEach(exercise => {
-        let text = fullDescription.substring(index, fullDescription.indexOf(`@{{${exercise.id}}}`));
-        description += text;
-        index += `@{{${exercise.id}}}`.length + text.length;
         span = insertExercise(exercise, false, true);
-        description += span.outerHTML;
+        editor.innerHTML = editor.innerHTML.replace(`@{{${exercise.id}}}`, span.outerHTML);
     });
 
-    description += fullDescription.substring(index);
-    editor.innerHTML = description;
-    spanClick();
+    SetClickForSpans();
 }
 
 hydrateEditor();
