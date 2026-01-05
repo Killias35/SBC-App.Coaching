@@ -3,11 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Seance;
-use App\Models\ActiviteSeance;
-use App\Models\Activite;
-use Illuminate\Support\Str;
-
 use App\Http\Services\SeanceService;
 
 class SeanceController extends Controller
@@ -36,10 +31,12 @@ class SeanceController extends Controller
         return view('seances.mines', compact('seances'));
     }
     
-    public function create()
+    public function create(Request $request)
     {
+        $user = $request->user();
         $activites = SeanceService::getActivites();
-        return view('seances.create', compact('activites'));
+        $favorites = SeanceService::getFavoritesActivites($user);
+        return view('seances.create', compact('activites', 'favorites'));
     }
 
     public function store(Request $request)
@@ -67,10 +64,10 @@ class SeanceController extends Controller
         $user = $request->user();
         $seance = SeanceService::get($id);
         $activites = SeanceService::getActivites();
-
+        $favorites = SeanceService::getFavoritesActivites($user);
         $canEdit = $seance->user_id == $user->id;
 
-        return view('seances.edit', compact('seance', 'activites', 'canEdit'));
+        return view('seances.edit', compact('seance', 'activites', 'canEdit', 'favorites'));
     }
 
     public function update(Request $request, $id)

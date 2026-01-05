@@ -16,7 +16,7 @@
         <div class="max-w-7xl mx-auto px-4">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 @foreach ($activites as $activite)
-                    <div class="bg-gray-900 border border-gray-700 rounded-xl shadow-lg overflow-hidden flex flex-col">
+                    <div class="bg-gray-900 border border-gray-800 rounded-2xl shadow-lg overflow-hidden flex flex-col hover:border-indigo-500 transition">
                         @if ($activite->image)
                             <img src="{{ $activite->image }}"
                                  class="h-40 w-full object-cover">

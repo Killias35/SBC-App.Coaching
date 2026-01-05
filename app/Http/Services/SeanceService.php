@@ -75,6 +75,12 @@ class SeanceService
         return $activites;
     }
 
+    public static function getFavoritesActivites(User $user)
+    {
+        $activites = $user->activitesFavorites;
+        return $activites;
+    }
+
     public static function deleteAllActivitesOfSeance(Seance $seance)
     {
         $seance->deleteAllActivitesOfSeance();

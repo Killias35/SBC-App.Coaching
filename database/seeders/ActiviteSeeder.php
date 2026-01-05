@@ -45,13 +45,13 @@ class ActiviteSeeder extends Seeder
         ];
 
         $images = [
-            "https://www.docteur-fitness.com/comment-faire-developpe-couche", // exemple Bench Press / développé couché 
-            "https://images.unsplash.com/photo-1605296867304-46d5465a13f1", // exemple Squat free weights 
-            "https://www.docteur-fitness.com/souleve-de-terre", // exemple Deadlift barbell 
-            "https://www.fitnessmith.fr/progresser-aux-tractions-de-0-a-5-tractions/", // exemple Pull up bar 
-            "https://www.setforset.com/blogs/news/overhead-press-how-to-muscles-worked-benefits-variations", // exemple Overhead press / militaire 
-            "https://images.unsplash.com/photo-1599058917219-96f22902f217", // exemple Dumbbell row 
-            "https://images.unsplash.com/photo-1583454110457-aec0f4e4e5e9", // exemple Plank / gainage 
+            "https://www.docteur-fitness.com/wp-content/uploads/2019/08/developpe-couche.gif", // exemple Bench Press / développé couché 
+            "https://projet-muscle.fr/wp-content/uploads/2025/11/squats-barre.png", // exemple Squat free weights 
+            "https://www.docteur-fitness.com/wp-content/uploads/2021/12/souleve-de-terre.gif", // exemple Deadlift barbell 
+            "https://i0.wp.com/www.fitnessmith.fr/wp-content/uploads/reussir-traction-.jpg?ssl=1/", // exemple Pull up bar 
+            "https://cdn.shopify.com/s/files/1/1633/7705/files/overhead_press_muscles_worked_1af5299a-2305-4dbb-9c20-2eb769ccf025_480x480.jpg?v=1637053355", // exemple Overhead press / militaire 
+            "https://cdn-blog.superprof.com/blog_fr/wp-content/uploads/2025/05/rowing-haltere-une-main-superprof-1946x1067.jpg.webp", // exemple Dumbbell row 
+            "https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExajR2ODZrdnQ3OTF6NHJnbG9rYm1oOHd0YTI4c2tzbTU4NnB1dDc0MSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Qw4X3FHASsw4VxkR7he/giphy.gif", // exemple Plank / gainage 
         ];
 
 

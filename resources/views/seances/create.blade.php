@@ -52,11 +52,15 @@
     <div
         id="autocomplete"
         class="absolute z-50 hidden bg-gray-800 border border-gray-700 rounded-xl shadow-lg max-h-48 overflow-y-auto"
-    ></div>
+    >
+    <div id="autocompletefav"></div>
+    </div>
 
 
 <script>
 const activites = @json($activites);
+const favoriteActivites = @json($favorites);
+const favoritesNames = favoriteActivites.map(favorite => favorite.nom);
 let state = {
     counter: 0,
     exercises: {}
@@ -115,6 +119,9 @@ editor.addEventListener('keyup', () => {
     const results = activites.filter(a =>
         a.nom.toLowerCase().includes(query)
     );
+    autocomplete.innerHTML = '<div id="autocompletefav"></div>';
+    const autocompletefav = document.getElementById('autocompletefav');
+
     if (!results.length) {
         for (let i = 0; i < activites.length; i++) {
             const exercice = activites[i];
@@ -124,7 +131,6 @@ editor.addEventListener('keyup', () => {
         return;
     }
 
-    autocomplete.innerHTML = '';
     results.forEach(exercice => {
         AddAutocomplete(exercice.nom, exercice);
     });
@@ -138,11 +144,20 @@ editor.addEventListener('keyup', () => {
 });
 
 function AddAutocomplete(name, exercice) {
+    const favorite = favoritesNames.includes(name);
     const item = document.createElement('div');
-    item.className = 'px-4 py-2 hover:bg-gray-700 cursor-pointer text-white';
-    item.textContent = name;
+    item.className = 'px-4 py-2 hover:bg-gray-700 cursor-pointer';
+    let txt = name;
+    if (favorite) {
+        txt = '🌟 ' + txt;
+        item.classList.add('text-red-200');
+        item.classList.add('bg-gray-800');
+        item.classList.add('hover:bg-gray-900');
+    }
+    item.textContent = txt;
     item.onclick = () => insertExercise(exercice);
-    autocomplete.appendChild(item);
+    if (!favorite) autocomplete.appendChild(item);
+    else autocompletefav.appendChild(item);
 }
 
 function SetClickForSpans() {
