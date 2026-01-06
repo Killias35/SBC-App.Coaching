@@ -88,6 +88,25 @@
             </div>
         </div>
 
+        <div class="gap-6">
+            <div class="bg-gray-800/90 backdrop-blur rounded-2xl shadow-lg border border-gray-700 p-5">
+                <h4 class="text-red-500 font-bold text-lg mb-4">
+                    Fonctionnalités futures/idées :
+                </h4>
+
+                <p class="text-gray-300 mb-1">
+                    • Groupe d'utilisateurs (exemple : groupe entrainement hyrox, groupe crossfit studio, groupe seance studio lundi 19h...) 
+                </p>
+                <p class="text-gray-300 mb-1">
+                    • Seances privés de coach a utilisateur / groupe 
+                </p>
+                <p class="text-gray-300 mb-1">
+                    • messages privé entre coach et utilisateur et dans un groupe
+                </p>
+                
+            </div>
+        </div>
+
         </div>
     </div>
 </x-app-layout>
